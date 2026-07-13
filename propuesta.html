@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta - Orquestador Operativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Incluir Alpine para animaciones simples si se desea -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',
+                        corporate: '#1e293b',
+                        danger: '#9f1239',
+                        blue: {
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* Clases utilitarias para retrasar animaciones en cascada */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Header Animado -->
+    <header class="bg-navy text-white py-20 px-6 border-b-4 border-blue-500 relative overflow-hidden">
+        <!-- Efectos de fondo -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 bg-danger rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow delay-200"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10 animate-fade-in-up">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-white/10 p-2 rounded-lg border border-white/20 backdrop-blur-sm">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i>
+                </div>
+                <span class="uppercase tracking-widest text-xs font-bold text-blue-200 letter-spacing-2">Documento Confidencial</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">Propuesta de Modernización <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">y Mitigación de Riesgo</span></h1>
+            <h2 class="text-xl md:text-2xl text-slate-300 font-light mb-10 border-l-4 border-blue-500 pl-4">Orquestador Operativo para Firmas Contables</h2>
+            
+            <div class="flex flex-col md:flex-row gap-6 text-sm text-slate-400 border-t border-slate-700/50 pt-8 mt-8">
+                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full">
+                    <i data-lucide="building-2" class="w-4 h-4 text-blue-400"></i>
+                    <span>Socio Director</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-blue-400"></i>
+                    <span>Pasto, Nariño</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full">
+                    <i data-lucide="calendar" class="w-4 h-4 text-blue-400"></i>
+                    <span>2026</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Botón Prototipo Superior -->
+    <div class="bg-blue-600 shadow-xl relative z-20 transform -translate-y-1/2 max-w-4xl mx-auto rounded-xl mx-6 md:mx-auto overflow-hidden animate-fade-in-up delay-100">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjU2M2ViIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMWQ0ZWQ4IiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-20"></div>
+        <div class="p-6 md:p-8 flex flex-col md:flex-row items-center justify-between relative z-10 gap-6">
+            <div class="text-white">
+                <h3 class="text-xl font-bold flex items-center gap-2">
+                    <i data-lucide="monitor-smartphone" class="w-6 h-6"></i>
+                    Ver Prototipo Interactivo
+                </h3>
+                <p class="text-blue-100 text-sm mt-1">Explora las 5 pantallas operativas del Orquestador.</p>
+            </div>
+            <a href="./index.html" target="_blank" class="w-full md:w-auto bg-white text-blue-600 hover:bg-slate-50 font-bold py-3 px-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                <span>Abrir Mockup</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-6 py-4 space-y-20">
+
+        <!-- Sección 1: Riesgo -->
+        <section class="opacity-0 animate-fade-in-up delay-200" style="animation-fill-mode: forwards;">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="bg-red-100 p-3 rounded-xl">
+                    <i data-lucide="alert-triangle" class="w-8 h-8 text-danger"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-navy">El Riesgo Operativo Actual</h3>
+            </div>
+            <p class="text-slate-600 mb-8 text-lg leading-relaxed">En el entorno regulatorio actual de la DIAN, la gestión contable manual basada en Excel, correos y memoria ya no es sostenible.</p>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-danger transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                    <div class="bg-red-50 w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-danger">
+                        <i data-lucide="clock" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold mb-3 text-navy text-lg">Ineficiencia Radian</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">Pérdida de deducciones por acuses tardíos. La firma asume el riesgo.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-danger transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                    <div class="bg-red-50 w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-danger">
+                        <i data-lucide="users-2" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold mb-3 text-navy text-lg">Cuellos de Botella</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">Envíos de nómina masivos generan rechazos en cadena y parálisis.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-danger transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                    <div class="bg-red-50 w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-danger">
+                        <i data-lucide="hard-drive" class="w-5 h-5"></i>
+                    </div>
+                    <h4 class="font-bold mb-3 text-navy text-lg">Fugas de Custodia</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">Discos locales violan Habeas Data exponiendo a multas millonarias.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MASTER PLAN -->
+        <section class="opacity-0 animate-fade-in-up delay-300" style="animation-fill-mode: forwards;">
+            <div class="bg-corporate text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <!-- Deco elements -->
+                <div class="absolute top-0 right-0 opacity-10 transform translate-x-1/4 -translate-y-1/4">
+                    <i data-lucide="workflow" class="w-96 h-96"></i>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="inline-block bg-blue-500/20 text-blue-300 px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase mb-6 border border-blue-500/30">
+                        Arquitectura del Sistema
+                    </div>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6">MASTER PLAN: Protocolo de Prevención Activa</h3>
+                    <p class="text-slate-300 text-lg mb-10 max-w-2xl">Implementación progresiva garantizando cumplimiento ISO 27001, integración asíncrona y tolerancia cero a errores cíclicos.</p>
+
+                    <div class="space-y-6">
+                        <!-- Fase 1 -->
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-navy p-3 rounded-xl border border-slate-600 text-blue-400">
+                                    <span class="font-bold text-xl">01</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2">Cimientos de Datos y Aislamiento</h4>
+                                    <p class="text-slate-400 text-sm mb-4">Garantizar Multi-Tenancy y seguridad antes de programar interfaces.</p>
+                                    <ul class="text-sm text-slate-300 space-y-2">
+                                        <li class="flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-blue-500"></i> Supabase PostgreSQL con autenticación unificada.</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4 text-blue-500"></i> Auditoría RLS: Imposible cruzar datos entre firmas.</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="history" class="w-4 h-4 text-blue-500"></i> Esquema Audit: Trazabilidad inmutable de cada transacción.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fase 2 -->
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-navy p-3 rounded-xl border border-slate-600 text-blue-400">
+                                    <span class="font-bold text-xl">02</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2">Arquitectura de Integración Fiscal Asíncrona</h4>
+                                    <p class="text-slate-400 text-sm mb-4">Conexión con el core fiscal (Siigo) sin bloquear el frontend.</p>
+                                    <ul class="text-sm text-slate-300 space-y-2">
+                                        <li class="flex items-center gap-2"><i data-lucide="webhook" class="w-4 h-4 text-blue-500"></i> Workers en Edge Functions manejando colas asíncronas.</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="shield-alert" class="w-4 h-4 text-blue-500"></i> Tolerancia Cero a Bucles: Aislamiento total de errores HTTP (ej. NIT inválido).</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="bell-ring" class="w-4 h-4 text-blue-500"></i> Webhooks registrados en Siigo/DIAN para notificaciones en tiempo real.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fase 3 -->
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-navy p-3 rounded-xl border border-slate-600 text-blue-400">
+                                    <span class="font-bold text-xl">03</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2">Ingesta Documental y OCR (Fail-Fast)</h4>
+                                    <p class="text-slate-400 text-sm mb-4">Recepción automática de XMLs y lectura de físicos.</p>
+                                    <ul class="text-sm text-slate-300 space-y-2">
+                                        <li class="flex items-center gap-2"><i data-lucide="server" class="w-4 h-4 text-blue-500"></i> Custodia legal (5 años) en Buckets con URLs firmadas y encriptación.</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="scan-face" class="w-4 h-4 text-blue-500"></i> IA Documental (GCP/AWS). Regla estricta: Confidence < 85% activa revisión manual.</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="mail-check" class="w-4 h-4 text-blue-500"></i> Captura IMAP Radian para extraer XMLs automáticos.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fase 4 -->
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-navy p-3 rounded-xl border border-slate-600 text-blue-400">
+                                    <span class="font-bold text-xl">04</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2">Frontend Operativo (React)</h4>
+                                    <p class="text-slate-400 text-sm mb-4">Consumo de datos orquestados con alta fidelidad UI.</p>
+                                    <ul class="text-sm text-slate-300 space-y-2">
+                                        <li class="flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4 text-blue-500"></i> Dashboards por rol (Socio, Auxiliar, Cliente Final).</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-blue-500"></i> Pruebas E2E completas asegurando fluidez en tiempo real.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 5: Inversión -->
+        <section class="opacity-0 animate-fade-in-up delay-400" style="animation-fill-mode: forwards;">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-blue-100 p-3 rounded-xl">
+                    <i data-lucide="wallet" class="w-8 h-8 text-blue-600"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-navy">Inversión y Modelo SaaS B2B</h3>
+            </div>
+            
+            <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-lg bg-white">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-navy border-b border-slate-200">
+                        <tr>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Concepto</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs w-1/3">Valor</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-6 font-bold text-navy text-base">Setup de Implementación</td>
+                            <td class="p-6">
+                                <span class="font-black text-blue-600 text-xl block">$ 8,500,000 COP</span>
+                                <span class="inline-block mt-2 bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs font-semibold">Pago Único</span>
+                            </td>
+                            <td class="p-6 text-slate-600 leading-relaxed">
+                                Parametrización de las 4 fases, auditoría de seguridad RLS, diseño de BD y conexión asíncrona.
+                                <span class="block mt-2 text-xs italic text-slate-400">(40% inicio, 30% Fase 3, 30% Entrega)</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-6 font-bold text-navy text-base">Licencia de Operación</td>
+                            <td class="p-6">
+                                <span class="font-black text-navy text-xl block">$ 1,800,000 COP <span class="text-sm text-slate-400 font-normal">/ mes</span></span>
+                            </td>
+                            <td class="p-6 text-slate-600 leading-relaxed">
+                                Inicia tras Fase 4. Cubre servidores Edge, OCR de Google/AWS, actualizaciones DIAN y respaldos inmutables.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <section class="opacity-0 animate-fade-in-up delay-400" style="animation-fill-mode: forwards;">
+            <div class="bg-gradient-to-br from-navy to-corporate p-10 md:p-16 rounded-3xl text-center shadow-2xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjU2M2ViIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMWQ0ZWQ4IiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-5"></div>
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-bold text-white mb-4">¿Listo para ver el sistema en acción?</h3>
+                    <p class="text-blue-100 mb-10 max-w-xl mx-auto text-lg">Haga clic a continuación para explorar las pantallas del Dashboard, Módulo de Auditoría OCR y Portal de Clientes.</p>
+                    <a href="./index.html" target="_blank" class="inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-xl shadow-xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 text-lg">
+                        <i data-lucide="play-circle" class="w-6 h-6"></i>
+                        Abrir Prototipo Interactivo
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-10 text-sm text-slate-400 mt-12 bg-white border-t border-slate-200">
+        <p>Documento Confidencial. Creado para uso exclusivo de la Firma Contable.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
