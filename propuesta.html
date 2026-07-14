@@ -170,8 +170,8 @@
                                     <span class="font-bold text-xl">01</span>
                                 </div>
                                 <div>
-                                    <h4 class="text-xl font-bold text-white mb-2">Cimientos de Datos y Aislamiento</h4>
-                                    <p class="text-slate-400 text-sm mb-4">Garantizar Multi-Tenancy y seguridad antes de programar interfaces.</p>
+                                    <h4 class="text-xl font-bold text-white mb-2">Bóveda, Seguridad y Sanitización</h4>
+                                    <p class="text-slate-400 text-sm mb-4">Configuración de base de datos blindada y roles. <strong class="text-white">Incluye proceso de migración estructurada: auditoría y traslado de sus bases de clientes actuales (Excel) al nuevo motor relacional sin pérdida de datos.</strong></p>
                                     <ul class="text-sm text-slate-300 space-y-2">
                                         <li class="flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-blue-500"></i> Supabase PostgreSQL con autenticación unificada.</li>
                                         <li class="flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4 text-blue-500"></i> Auditoría RLS: Imposible cruzar datos entre firmas.</li>
@@ -194,6 +194,7 @@
                                         <li class="flex items-center gap-2"><i data-lucide="webhook" class="w-4 h-4 text-blue-500"></i> Workers en Edge Functions manejando colas asíncronas.</li>
                                         <li class="flex items-center gap-2"><i data-lucide="shield-alert" class="w-4 h-4 text-blue-500"></i> Tolerancia Cero a Bucles: Aislamiento total de errores HTTP (ej. NIT inválido).</li>
                                         <li class="flex items-center gap-2"><i data-lucide="bell-ring" class="w-4 h-4 text-blue-500"></i> Webhooks registrados en Siigo/DIAN para notificaciones en tiempo real.</li>
+                                        <li class="flex items-center gap-2"><i data-lucide="mail-warning" class="w-4 h-4 text-blue-500"></i> Centro Anti-Spam: Notificaciones internas consolidadas para evitar saturar el correo.</li>
                                     </ul>
                                 </div>
                             </div>
@@ -250,9 +251,9 @@
             <p class="text-slate-600 mb-8 text-lg font-medium">Operaremos bajo un modelo corporativo de "Software como Servicio", minimizando su riesgo financiero de entrada.</p>
             
             <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm mb-10">
-                <h4 class="font-bold text-navy mb-4 flex items-center gap-2 text-xl"><i data-lucide="layers" class="w-6 h-6 text-blue-600"></i> Setup de Arquitectura (Implementación Única)</h4>
+                <h4 class="font-bold text-navy mb-4 flex items-center gap-2 text-xl"><i data-lucide="layers" class="w-6 h-6 text-blue-600"></i> Setup de Arquitectura y Migración (Pago Único)</h4>
                 <div class="flex flex-col md:flex-row justify-between md:items-center gap-6">
-                    <p class="text-sm text-slate-600 leading-relaxed max-w-xl">Parametrización de las 4 fases, auditoría de seguridad RLS, diseño DB e integración API. <br><span class="inline-block mt-2 text-xs italic font-medium bg-slate-100 px-3 py-1 rounded-md text-slate-500">(Facturado en 3 hitos: 40% inicio, 30% Fase 3, 30% Entrega)</span></p>
+                    <p class="text-sm text-slate-600 leading-relaxed max-w-xl">Parametrización de las 4 fases, <strong>migración auditada de su información histórica desde Excel</strong>, diseño DB e integración con API fiscal. <br><span class="inline-block mt-2 text-xs italic font-medium bg-slate-100 px-3 py-1 rounded-md text-slate-500">(Facturado en 3 hitos: 40% inicio, 30% Fase 3, 30% Entrega)</span></p>
                     <div class="text-3xl font-black text-blue-600 shrink-0">$ 4,000,000 <span class="text-lg font-bold">COP</span></div>
                 </div>
             </div>
@@ -350,11 +351,21 @@
         <section class="opacity-0 animate-fade-in-up delay-400 border-t border-slate-200 pt-12 mt-12" style="animation-fill-mode: forwards;">
             <div class="flex items-center gap-3 mb-6">
                 <i data-lucide="file-question" class="w-6 h-6 text-navy"></i>
-                <h3 class="text-2xl font-bold text-navy">8. Anexo: Continuidad y Mitigación de Riesgos</h3>
+                <h3 class="text-2xl font-bold text-navy">8. Anexo: Continuidad, Migración y Mitigación de Riesgos</h3>
             </div>
             <p class="text-slate-600 mb-8 text-lg font-medium">Respuestas a los lineamientos críticos de infraestructura, seguridad y viabilidad operativa de la firma:</p>
             
             <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-red-500 hover:border-blue-200 transition-colors">
+                    <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="shield-alert" class="w-5 h-5 text-red-500"></i> Blindaje Anti-Ransomware y Ciberataques</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed"><strong>Encriptación de Grado Bancario:</strong> Prometer que un sistema no recibirá intentos de ataque es falso. Nuestro enfoque es la mitigación absoluta. La base de datos cuenta con encriptación en reposo (AES-256). Si un atacante lograra vulnerar los servidores, no extraería PDFs ni facturas, solo cadenas de texto ilegibles. Además, se forzará Autenticación de Múltiples Factores (MFA) para todos los socios y auxiliares.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-blue-500 hover:border-blue-200 transition-colors">
+                    <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="database-zap" class="w-5 h-5 text-blue-500"></i> Transición Cero Fricción (De Excel a Base de Datos)</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed"><strong>Sanitización de Historial:</strong> La transición no paralizará a la firma. No importaremos sus Excels actuales arrastrando errores ("copiar y pegar"). Como parte de la Fase 1, se entregarán plantillas maestras estrictas para consolidar la información. El sistema auditará esos datos (validando NITs, regímenes y formatos) antes de inyectarlos limpiamente en la nueva bóveda, garantizando una base limpia desde el día uno.</p>
+                </div>
+
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
                     <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="server" class="w-5 h-5 text-blue-500"></i> ¿Siigo ya no hace esto?</h4>
                     <p class="text-sm text-slate-600 leading-relaxed"><strong>Diferenciación de Core:</strong> Siigo es el motor de almacenamiento fiscal, pero no es un orquestador. Siigo no extrae automáticamente archivos de correos ni lee recibos físicos con IA. Actualmente su equipo pierde cientos de horas "empujando" la información hacia Siigo de forma manual. Este sistema alimenta a Siigo automáticamente, eliminando el cuello de botella.</p>
