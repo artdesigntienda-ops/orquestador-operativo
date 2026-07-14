@@ -245,42 +245,61 @@
                 <div class="bg-blue-100 p-3 rounded-xl">
                     <i data-lucide="wallet" class="w-8 h-8 text-blue-600"></i>
                 </div>
-                <h3 class="text-3xl font-bold text-navy">Inversión y Modelo SaaS B2B</h3>
+                <h3 class="text-3xl font-bold text-navy">5. Inversión y Modelos de Operación (SaaS)</h3>
             </div>
+            <p class="text-slate-600 mb-8 text-lg font-medium">Operaremos bajo un modelo corporativo de "Software como Servicio", minimizando su riesgo financiero de entrada.</p>
             
-            <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-lg bg-white">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-slate-50 text-navy border-b border-slate-200">
-                        <tr>
-                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Concepto</th>
-                            <th class="p-6 font-bold uppercase tracking-wider text-xs w-1/3">Valor</th>
-                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Descripción</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="p-6 font-bold text-navy text-base">Setup de Implementación</td>
-                            <td class="p-6">
-                                <span class="font-black text-blue-600 text-xl block">$ 4,000,000 COP</span>
-                                <span class="inline-block mt-2 bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs font-semibold">Pago Único</span>
-                            </td>
-                            <td class="p-6 text-slate-600 leading-relaxed">
-                                Parametrización de las 4 fases, auditoría de seguridad RLS, diseño de BD y conexión asíncrona.
-                                <span class="block mt-2 text-xs italic text-slate-400">(40% inicio, 30% Fase 3, 30% Entrega)</span>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="p-6 font-bold text-navy text-base">Licencia de Operación</td>
-                            <td class="p-6">
-                                <span class="font-black text-navy text-xl block">$ 800,000 COP <span class="text-sm text-slate-400 font-normal">/ mes</span></span>
-                            </td>
-                            <td class="p-6 text-slate-600 leading-relaxed">
-                                Inicia tras Fase 4. Cubre servidores Edge, OCR de Google/AWS, actualizaciones DIAN y respaldos inmutables.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm mb-10">
+                <h4 class="font-bold text-navy mb-4 flex items-center gap-2 text-xl"><i data-lucide="layers" class="w-6 h-6 text-blue-600"></i> Setup de Arquitectura (Implementación Única)</h4>
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-6">
+                    <p class="text-sm text-slate-600 leading-relaxed max-w-xl">Parametrización de las 4 fases, auditoría de seguridad RLS, diseño DB e integración API. <br><span class="inline-block mt-2 text-xs italic font-medium bg-slate-100 px-3 py-1 rounded-md text-slate-500">(Facturado en 3 hitos: 40% inicio, 30% Fase 3, 30% Entrega)</span></p>
+                    <div class="text-3xl font-black text-blue-600 shrink-0">$ 4,000,000 <span class="text-lg font-bold">COP</span></div>
+                </div>
             </div>
+
+            <h4 class="font-bold text-navy mb-6 text-xl">Planes de Mensualidad Operativa (Post-Entrega)</h4>
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- Plan Core -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="p-8 bg-slate-50 border-b border-slate-200">
+                        <h5 class="text-2xl font-bold text-slate-700">Plan Core Operativo</h5>
+                        <p class="text-sm text-slate-500 mt-2 h-10">El motor base para evitar multas. Mantiene la dependencia en la digitación humana.</p>
+                        <div class="mt-6 text-4xl font-black text-slate-800">$ 800,000 <span class="text-base font-bold text-slate-500">COP / mes</span></div>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <ul class="space-y-4 text-sm text-slate-600">
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-green-500 mt-0.5 shrink-0"></i> <span>Servidores y Respaldos inmutables</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-green-500 mt-0.5 shrink-0"></i> <span>Conexión automatizada Siigo/DIAN</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-green-500 mt-0.5 shrink-0"></i> <span>Captura básica de correos Radian</span></li>
+                            <li class="flex items-start gap-3 opacity-50"><i data-lucide="x" class="w-5 h-5 text-red-500 mt-0.5 shrink-0"></i> <span>Sin IA (Lectura manual de recibos físicos)</span></li>
+                            <li class="flex items-start gap-3 opacity-50"><i data-lucide="x" class="w-5 h-5 text-red-500 mt-0.5 shrink-0"></i> <span>Sin Portal para Clientes Finales</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Plan Premium -->
+                <div class="bg-white rounded-2xl border-2 border-blue-500 shadow-xl flex flex-col overflow-hidden relative transform md:-translate-y-4">
+                    <div class="absolute top-0 inset-x-0 h-1.5 bg-blue-500"></div>
+                    <div class="absolute top-4 right-4 bg-blue-100 text-blue-700 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm">Recomendado</div>
+                    
+                    <div class="p-8 bg-blue-50/50 border-b border-slate-200">
+                        <h5 class="text-2xl font-bold text-navy">Plan Automatizador Premium</h5>
+                        <p class="text-sm text-slate-600 mt-2 h-10 font-medium">Automatización total para escalar la firma, reducir nómina y captar nuevos clientes.</p>
+                        <div class="mt-6 text-4xl font-black text-blue-600">$ 1,800,000 <span class="text-base font-bold text-blue-500">COP / mes</span></div>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <ul class="space-y-4 text-sm text-slate-700">
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-green-500 mt-0.5 shrink-0"></i> <strong>Todo lo del Plan Core, más:</strong></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-blue-600 mt-0.5 shrink-0"></i> <span><strong>Inteligencia Artificial (OCR):</strong> Lectura de hasta 2,500 recibos/mes. Elimina 70% de digitación.</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-blue-600 mt-0.5 shrink-0"></i> <span><strong>Portal de Clientes Finales:</strong> Acceso web desde celular para sus clientes con marca blanca.</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-blue-600 mt-0.5 shrink-0"></i> <span>Soporte prioritario 24/7</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <p class="text-xs text-slate-400 mt-6 font-medium">* Costos de firmas digitales y envíos directos a Siigo son asumidos por la firma en sus contratos actuales.</p>
         </section>
 
         <!-- Sección 6: ROI & CTA -->
@@ -324,6 +343,37 @@
                     <i data-lucide="arrow-right-circle" class="w-6 h-6 text-blue-600 shrink-0"></i>
                     Definición de las credenciales de acceso al proveedor tecnológico actual y firma de acuerdos de confidencialidad (NDA) para iniciar la Fase 1.
                 </span>
+            </div>
+        </section>
+
+        <!-- Sección 8: FAQ y Continuidad -->
+        <section class="opacity-0 animate-fade-in-up delay-400 border-t border-slate-200 pt-12 mt-12" style="animation-fill-mode: forwards;">
+            <div class="flex items-center gap-3 mb-6">
+                <i data-lucide="file-question" class="w-6 h-6 text-navy"></i>
+                <h3 class="text-2xl font-bold text-navy">8. Anexo: Continuidad y Mitigación de Riesgos</h3>
+            </div>
+            <p class="text-slate-600 mb-8 text-lg font-medium">Respuestas a los lineamientos críticos de infraestructura, seguridad y viabilidad operativa de la firma:</p>
+            
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                    <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="server" class="w-5 h-5 text-blue-500"></i> ¿Siigo ya no hace esto?</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed"><strong>Diferenciación de Core:</strong> Siigo es el motor de almacenamiento fiscal, pero no es un orquestador. Siigo no extrae automáticamente archivos de correos ni lee recibos físicos con IA. Actualmente su equipo pierde cientos de horas "empujando" la información hacia Siigo de forma manual. Este sistema alimenta a Siigo automáticamente, eliminando el cuello de botella.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                    <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="calculator" class="w-5 h-5 text-blue-500"></i> Justificación de Inversión</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed"><strong>Costo vs. Riesgo:</strong> El costo mensual de la licencia es inferior a la carga prestacional de un auxiliar contable. Sin embargo, un error manual por fatiga (ej. omitir un acuse en Radian) genera multas que absorben la rentabilidad de todo el año de un cliente. El sistema previene el error antes de que ocurra (Fail-Fast) y multiplica la capacidad de absorción de clientes de su equipo actual.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                    <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="lock" class="w-5 h-5 text-blue-500"></i> Seguridad y Fugas de Datos</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed"><strong>Aislamiento Criptográfico:</strong> La infraestructura no es monolítica. Opera sobre PostgreSQL con Row Level Security (RLS) estricto. La base de datos aísla la información de cada cliente a nivel de motor SQL. Es técnicamente imposible que un error de software exponga los datos del "Cliente A" al "Cliente B". Cumplimiento garantizado de ISO 27001 y Habeas Data.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                    <h4 class="font-bold text-navy mb-2 flex items-center gap-2"><i data-lucide="code-2" class="w-5 h-5 text-blue-500"></i> Continuidad del Negocio (Vendor Lock-in)</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed"><strong>Propiedad y Estandarización:</strong> El sistema se construye bajo estándares globales (React, Supabase, Python). No se utilizan lenguajes propietarios cerrados. Por contrato, el código fuente y las bases de datos pertenecen a la firma. Ante cualquier eventualidad, cualquier equipo de ingeniería intermedio puede leer la documentación y asumir el control de la operación en 48 horas.</p>
+                </div>
             </div>
         </section>
 
