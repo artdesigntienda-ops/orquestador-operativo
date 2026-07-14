@@ -3,585 +3,625 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mockup - Automatizador Operativo B2B</title>
+    <title>Orquestador Operativo - Prototipo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        
+        /* Shadcn UI like utility classes */
+        .card { background-color: white; border-radius: 0.75rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        .badge { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; padding: 0.125rem 0.625rem; font-size: 0.75rem; font-weight: 600; transition: background-color 0.2s; }
+        
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        
+        .glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
                     },
                     colors: {
                         navy: '#0f172a',
                         corporate: '#1e293b',
-                        danger: '#9f1239',
-                        blue: {
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                        }
                     }
                 }
             }
         }
     </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        [x-cloak] { display: none !important; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        /* Simulación de logs de consola */
-        .console-text { text-shadow: 0 0 5px rgba(56, 189, 248, 0.5); }
-    </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col" x-data="{ currentTab: 'dashboard' }">
+<body>
+    <div id="root"></div>
 
-    <!-- Top Navigation Bar -->
-    <div class="bg-navy border-b-4 border-blue-600 sticky top-0 z-50 shadow-xl">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-end">
-            <div class="flex space-x-1 pb-0 overflow-x-auto">
-                <button @click="currentTab = 'dashboard'" :class="currentTab === 'dashboard' ? 'bg-white text-navy font-bold rounded-t-lg' : 'text-slate-400 hover:text-white hover:bg-white/10 rounded-t-lg'" class="whitespace-nowrap py-3 px-5 text-sm transition-all flex items-center gap-2 mt-2">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    1. Dashboard Socios
-                </button>
-                <button @click="currentTab = 'async'" :class="currentTab === 'async' ? 'bg-white text-navy font-bold rounded-t-lg' : 'text-slate-400 hover:text-white hover:bg-white/10 rounded-t-lg'" class="whitespace-nowrap py-3 px-5 text-sm transition-all flex items-center gap-2 mt-2">
-                    <i data-lucide="webhook" class="w-4 h-4"></i>
-                    2. Motor Asíncrono (Siigo/DIAN)
-                </button>
-                <button @click="currentTab = 'ocr'" :class="currentTab === 'ocr' ? 'bg-white text-navy font-bold rounded-t-lg' : 'text-slate-400 hover:text-white hover:bg-white/10 rounded-t-lg'" class="whitespace-nowrap py-3 px-5 text-sm transition-all flex items-center gap-2 mt-2">
-                    <i data-lucide="scan-line" class="w-4 h-4"></i>
-                    3. Módulo OCR & IA
-                </button>
-                <button @click="currentTab = 'audit'" :class="currentTab === 'audit' ? 'bg-white text-navy font-bold rounded-t-lg' : 'text-slate-400 hover:text-white hover:bg-white/10 rounded-t-lg'" class="whitespace-nowrap py-3 px-5 text-sm transition-all flex items-center gap-2 mt-2">
-                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                    4. Bóveda ISO 27001
-                </button>
-                <button @click="currentTab = 'portal'" :class="currentTab === 'portal' ? 'bg-white text-navy font-bold rounded-t-lg' : 'text-slate-400 hover:text-white hover:bg-white/10 rounded-t-lg'" class="whitespace-nowrap py-3 px-5 text-sm transition-all flex items-center gap-2 mt-2">
-                    <i data-lucide="smartphone" class="w-4 h-4"></i>
-                    5. Portal Móvil (Cliente)
-                </button>
-                <button @click="currentTab = 'landing'" :class="currentTab === 'landing' ? 'bg-white text-navy font-bold rounded-t-lg' : 'text-slate-400 hover:text-white hover:bg-white/10 rounded-t-lg'" class="whitespace-nowrap py-3 px-5 text-sm transition-all flex items-center gap-2 mt-2">
-                    <i data-lucide="megaphone" class="w-4 h-4"></i>
-                    6. Landing de Ventas
-                </button>
-            </div>
-            <div class="hidden lg:flex pb-3 items-center gap-3 text-slate-300 text-sm">
-                <span class="flex items-center gap-1"><div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> Supabase: Online</span>
-                <span class="flex items-center gap-1"><div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> Siigo API: Syncing</span>
-            </div>
-        </div>
-    </div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } = window.Recharts;
 
-    <!-- Main Content -->
-    <main class="flex-1 p-4 md:p-6 lg:p-8 max-w-[1400px] w-full mx-auto">
-        
-        <!-- ==========================================
-             PANTALLA 1: DASHBOARD DE SOCIOS
-             ========================================== -->
-        <div x-show="currentTab === 'dashboard'" x-cloak class="space-y-6 animate-fade-in">
-            <header class="flex justify-between items-center bg-white p-5 border border-slate-200 rounded-xl shadow-sm">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-corporate p-2.5 rounded-lg text-white shadow-inner border border-slate-700">
-                        <i data-lucide="building-2"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-navy tracking-tight">FirmaContable Pro</h1>
-                        <p class="text-xs text-slate-500 font-medium">Automatizador Operativo v2.0</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="text-right hidden sm:block">
-                        <p class="text-sm font-bold text-navy leading-none">Socio Director</p>
-                        <p class="text-xs text-blue-600 mt-1 font-bold">Admin. Workspace</p>
-                    </div>
-                    <div class="h-10 w-10 bg-blue-100 border border-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold shadow-sm">
-                        SD
-                    </div>
-                </div>
-            </header>
+        // --- Helper Components ---
+        const Icon = ({ name, className }) => <i data-lucide={name} className={className}></i>;
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Riesgo Radian -->
-                <div class="bg-[#fff1f2] border border-[#fecdd3] p-5 rounded-xl shadow-sm relative overflow-hidden group">
-                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-danger"></div>
-                    <div class="flex justify-between items-start">
-                        <h2 class="text-sm font-bold text-[#881337] uppercase tracking-wide">Riesgo Radian (Acuses)</h2>
-                        <i data-lucide="alert-triangle" class="text-danger h-5 w-5 group-hover:scale-110 transition-transform"></i>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-3xl font-black text-danger">3</p>
-                        <p class="text-sm font-medium text-[#9f1239] mt-1">Vencen hoy - Requieren acción</p>
-                    </div>
-                </div>
-                <!-- Colas Asíncronas -->
-                <div class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm relative">
-                    <div class="flex justify-between items-start">
-                        <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wide">Integración Siigo</h2>
-                        <i data-lucide="refresh-cw" class="text-blue-500 h-5 w-5"></i>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex items-baseline space-x-2">
-                            <p class="text-3xl font-black text-navy">98.5%</p>
-                            <p class="text-xs font-bold text-green-600 uppercase">Sincronizado</p>
+        // --- Screen 1: Dashboard Socios ---
+        const DashboardScreen = () => {
+            const data = [
+                { name: 'Lun', manual: 40, ia: 120 },
+                { name: 'Mar', manual: 35, ia: 150 },
+                { name: 'Mié', manual: 20, ia: 180 },
+                { name: 'Jue', manual: 15, ia: 220 },
+                { name: 'Vie', manual: 10, ia: 250 },
+                { name: 'Sáb', manual: 5, ia: 60 },
+                { name: 'Dom', manual: 2, ia: 30 },
+            ];
+
+            return (
+                <div className="p-8 max-w-7xl mx-auto space-y-6 animate-fade-in">
+                    <div className="flex justify-between items-center mb-8">
+                        <div>
+                            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Dashboard de Socios</h2>
+                            <p className="text-slate-500 mt-1">Control de riesgo y automatización operativa (Vista directiva).</p>
                         </div>
-                        <p class="text-sm text-slate-600 mt-1 font-medium">12 documentos en cola asíncrona</p>
+                        <div className="flex items-center gap-4">
+                            <button className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">
+                                <Icon name="calendar" className="w-4 h-4" />
+                                Últimos 7 días
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <!-- Revisiones Manuales (OCR) -->
-                <div class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm relative">
-                    <div class="flex justify-between items-start">
-                        <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wide">Cola de Revisión (OCR)</h2>
-                        <i data-lucide="scan-face" class="text-amber-500 h-5 w-5"></i>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-3xl font-black text-navy">5</p>
-                        <p class="text-sm text-slate-600 mt-1 font-medium">Documentos con Confianza &lt; 85%</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Table Monitorización -->
-            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-                <div class="px-5 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                    <h3 class="font-bold text-navy text-sm uppercase tracking-wide flex items-center gap-2">
-                        <i data-lucide="activity" class="w-4 h-4 text-blue-600"></i>
-                        Monitor de Operación Global
-                    </h3>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left whitespace-nowrap">
-                        <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
-                            <tr>
-                                <th class="px-5 py-3">Cliente (RLS Aislado)</th>
-                                <th class="px-5 py-3">NIT</th>
-                                <th class="px-5 py-3">Estado DIAN / API</th>
-                                <th class="px-5 py-3 text-right">Intervención</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr class="hover:bg-slate-50">
-                                <td class="px-5 py-4 font-bold text-navy">Industrias San Jorge SAS</td>
-                                <td class="px-5 py-4 font-mono text-slate-500 text-xs">890.987.654-1</td>
-                                <td class="px-5 py-4">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold bg-green-100 text-green-800 border border-green-200 uppercase">
-                                        Sincronizado vía Webhook
-                                    </span>
-                                </td>
-                                <td class="px-5 py-4 text-right">
-                                    <button class="text-slate-400 cursor-not-allowed font-bold text-xs uppercase tracking-wide">Automático</button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#fff1f2] border-l-4 border-l-danger">
-                                <td class="px-5 py-4 font-bold text-[#9f1239]">Distribuidora El Sol Ltda</td>
-                                <td class="px-5 py-4 font-mono text-[#9f1239] text-xs font-bold">800.123.456-A</td>
-                                <td class="px-5 py-4">
-                                    <span class="inline-flex items-center gap-1.5 text-danger font-bold bg-white px-2.5 py-1 border border-[#fecdd3] rounded-md shadow-sm">
-                                        <i data-lucide="shield-alert" class="h-3.5 w-3.5"></i>
-                                        <span class="text-[10px] uppercase">Error 400: NIT Inválido (Bloqueado)</span>
-                                    </span>
-                                </td>
-                                <td class="px-5 py-4 text-right">
-                                    <button class="bg-danger text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#881337] shadow-sm transition-colors">
-                                        Resolver Falla
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                    {/* Top Metrics Bento */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="card p-6 flex flex-col justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-sm font-medium text-slate-500">Riesgo Radian (Acuses)</p>
+                                    <h3 className="text-3xl font-bold text-slate-900 mt-2">3 Vencimientos</h3>
+                                </div>
+                                <div className="p-3 bg-rose-100 text-rose-600 rounded-lg">
+                                    <Icon name="alert-triangle" className="w-6 h-6" />
+                                </div>
+                            </div>
+                            <div className="mt-4 flex items-center gap-2">
+                                <span className="badge bg-rose-100 text-rose-700 animate-pulse flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-rose-500"></span> Crítico
+                                </span>
+                                <span className="text-xs text-slate-500">Requieren acción inmediata</span>
+                            </div>
+                        </div>
 
-        <!-- ==========================================
-             PANTALLA 2: MOTOR ASÍNCRONO (NUEVO)
-             ========================================== -->
-        <div x-show="currentTab === 'async'" x-cloak class="space-y-6">
-            <div class="bg-corporate text-white p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 class="text-xl font-bold flex items-center gap-2">
-                        <i data-lucide="webhook" class="text-blue-400"></i>
-                        Cola de Trabajos Asíncronos (Edge Workers)
-                    </h2>
-                    <p class="text-slate-400 text-sm mt-1">Previene cuellos de botella y garantiza tolerancia cero a bucles ciegos con la DIAN/Siigo.</p>
-                </div>
-                <div class="flex items-center gap-3 bg-navy p-3 rounded-lg border border-slate-700">
-                    <div class="text-right">
-                        <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Tabla Supabase</p>
-                        <p class="text-sm font-mono text-blue-300">sync_jobs</p>
+                        <div className="card p-6 flex flex-col justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-sm font-medium text-slate-500">Sincronización Siigo</p>
+                                    <h3 className="text-3xl font-bold text-slate-900 mt-2">98.5%</h3>
+                                </div>
+                                <div className="p-3 bg-emerald-100 text-emerald-600 rounded-lg">
+                                    <Icon name="check-circle-2" className="w-6 h-6" />
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <div className="w-full bg-slate-100 rounded-full h-2 mb-2">
+                                    <div className="bg-emerald-500 h-2 rounded-full" style={{width: '98.5%'}}></div>
+                                </div>
+                                <span className="text-xs text-slate-500">Exitoso. Faltan 2 clientes en cola asíncrona.</span>
+                            </div>
+                        </div>
+
+                        <div className="card p-6 flex flex-col justify-between">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="text-sm font-medium text-slate-500">Ahorro Operativo (IA)</p>
+                                    <h3 className="text-3xl font-bold text-slate-900 mt-2">145 Horas</h3>
+                                </div>
+                                <div className="p-3 bg-blue-100 text-blue-600 rounded-lg">
+                                    <Icon name="clock" className="w-6 h-6" />
+                                </div>
+                            </div>
+                            <div className="mt-4 flex items-center gap-2 text-sm text-emerald-600 font-medium">
+                                <Icon name="trending-up" className="w-4 h-4" />
+                                <span>+24% automatizadas este mes</span>
+                            </div>
+                        </div>
                     </div>
-                    <i data-lucide="database" class="text-slate-500"></i>
-                </div>
-            </div>
 
-            <!-- Logs simulados -->
-            <div class="bg-navy rounded-xl shadow-xl border border-slate-700 overflow-hidden flex flex-col h-[500px]">
-                <div class="bg-corporate border-b border-slate-700 p-3 flex gap-2">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-                
-                <div class="p-0 flex-1 overflow-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="bg-slate-800 text-slate-400 text-xs font-mono border-b border-slate-700">
-                            <tr>
-                                <th class="p-3">job_id</th>
-                                <th class="p-3">firm_id / client_id</th>
-                                <th class="p-3">payload_type</th>
-                                <th class="p-3">status</th>
-                                <th class="p-3">error_log / webhook_response</th>
-                            </tr>
-                        </thead>
-                        <tbody class="font-mono text-xs divide-y divide-slate-800/50">
-                            <tr class="hover:bg-slate-800/50">
-                                <td class="p-3 text-slate-300">job_082A</td>
-                                <td class="p-3 text-slate-400">f_102 / c_948</td>
-                                <td class="p-3 text-blue-400">POST /v1/invoices</td>
-                                <td class="p-3"><span class="text-green-400 bg-green-400/10 px-2 py-0.5 rounded">COMPLETED</span></td>
-                                <td class="p-3 text-slate-500">{ "dian_status": "Aceptado", "cufe": "0x9a8f..." }</td>
-                            </tr>
-                            <tr class="bg-red-900/10 hover:bg-red-900/20">
-                                <td class="p-3 text-slate-300">job_082B</td>
-                                <td class="p-3 text-slate-400">f_102 / c_112</td>
-                                <td class="p-3 text-blue-400">POST /v1/payroll</td>
-                                <td class="p-3"><span class="text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-500/30">FAILED_ISOLATED</span></td>
-                                <td class="p-3 text-red-300">
-                                    <div class="break-all max-w-md">
-                                    HTTP 400: {"error": "Invalid NIT structure"}. <br>
-                                    <span class="text-yellow-400 mt-1 block">>> ACTION: Execution halted. Zero retries. Sent to manual queue.</span>
+                    {/* Main Bento */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Chart */}
+                        <div className="card p-6 lg:col-span-2">
+                            <div className="mb-6">
+                                <h3 className="text-lg font-bold text-slate-900">Documentos Procesados: IA vs Manual</h3>
+                                <p className="text-sm text-slate-500">Distribución de carga de trabajo en los últimos 7 días.</p>
+                            </div>
+                            <div className="h-[300px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} dy={10} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
+                                        <Tooltip 
+                                            contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                            cursor={{fill: '#f1f5f9'}}
+                                        />
+                                        <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
+                                        <Bar dataKey="ia" name="Procesado por IA" fill="#0f172a" radius={[4, 4, 0, 0]} barSize={32} />
+                                        <Bar dataKey="manual" name="Digitación Manual" fill="#cbd5e1" radius={[4, 4, 0, 0]} barSize={32} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+
+                        {/* Alerts Table */}
+                        <div className="card p-0 flex flex-col border-rose-200 shadow-[0_0_15px_rgba(225,29,72,0.05)]">
+                            <div className="p-6 border-b border-slate-100">
+                                <h3 className="text-lg font-bold text-slate-900">Alertas Críticas (Fail-Fast)</h3>
+                                <p className="text-sm text-slate-500">Aislamiento de errores activos.</p>
+                            </div>
+                            <div className="overflow-y-auto max-h-[300px] p-2 space-y-2">
+                                <div className="p-4 mx-2 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors bg-white">
+                                    <div className="flex justify-between items-start mb-1">
+                                        <h4 className="font-semibold text-slate-800 text-sm">Ferretería El Constructor SAS</h4>
+                                        <span className="badge bg-rose-100 text-rose-700">400: NIT Inválido</span>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-slate-800/50">
-                                <td class="p-3 text-slate-300">job_082C</td>
-                                <td class="p-3 text-slate-400">f_102 / c_555</td>
-                                <td class="p-3 text-blue-400">GET /v1/radian</td>
-                                <td class="p-3"><span class="text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded">PENDING</span></td>
-                                <td class="p-3 text-slate-500">Waiting in queue...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==========================================
-             PANTALLA 3: INTERFAZ DEL AUXILIAR (OCR)
-             ========================================== -->
-        <div x-show="currentTab === 'ocr'" x-cloak class="h-[calc(100vh-160px)] min-h-[600px]">
-            <div class="flex h-full border border-slate-200 shadow-sm rounded-xl bg-white overflow-hidden">
-                <!-- Lado Izquierdo: Visualizador OCR -->
-                <div class="w-1/2 bg-corporate border-r border-slate-300 relative flex flex-col overflow-hidden">
-                    <div class="bg-navy p-3 flex justify-between items-center border-b border-slate-700 z-10 shadow-md text-white">
-                        <span class="text-xs font-mono tracking-wider font-bold">LOTE_FÍSICO_004.pdf</span>
-                        <div class="bg-amber-500/20 text-amber-400 border border-amber-500/50 text-[10px] uppercase font-bold px-2 py-1 rounded">
-                            Revisión Manual: Confidence < 85%
-                        </div>
-                    </div>
-                    <!-- Document Preview Simulation -->
-                    <div class="flex-1 relative flex items-center justify-center p-8 overflow-auto bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzFlMjliYiIvPgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIxIiBmaWxsPSIjMzMzMzMzIi8+Cjwvc3ZnPg==')]">
-                        <div class="bg-[#f4f1ea] w-full max-w-md aspect-[1/1.4] shadow-2xl p-10 flex flex-col filter grayscale contrast-125 brightness-[0.9] rotate-[-1deg] relative">
-                            <div class="border-b-[3px] border-black pb-4 mb-6 text-center">
-                                <h2 class="text-2xl font-bold font-serif text-black uppercase tracking-widest">Recibo de Caja</h2>
-                            </div>
-                            <div class="space-y-6 font-mono text-sm text-black">
-                                <div class="flex justify-between border-b border-black/20 pb-1">
-                                    <span class="font-bold">Cliente:</span>
-                                    <span class="bg-yellow-200 px-1 border border-yellow-400">PAPELERÍA LA 14</span>
-                                </div>
-                                <div class="flex justify-between relative pb-1">
-                                    <span class="font-bold">NIT/CC:</span>
-                                    <span class="blur-[1.5px] opacity-80 tracking-widest">900.?8?.11-3</span>
-                                    <!-- Error highlight -->
-                                    <div class="absolute -inset-1 border-[3px] border-danger bg-danger/10 z-20"></div>
-                                </div>
-                                <div class="flex justify-between font-bold border-t-[3px] border-black pt-3 mt-8 text-lg">
-                                    <span>Valor Total:</span><span>$ 1.500.000</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lado Derecho: Extracción -->
-                <div class="w-1/2 bg-white flex flex-col relative">
-                    <!-- overlay for lockout -->
-                    <div class="absolute inset-0 bg-danger/5 z-0 pointer-events-none"></div>
-
-                    <div class="px-8 py-5 border-b border-slate-200 bg-white flex justify-between items-center shadow-sm z-10 relative">
-                        <div>
-                            <h2 class="text-lg font-bold text-navy flex items-center gap-2">
-                                <i data-lucide="shield-alert" class="h-5 w-5 text-danger"></i>
-                                Fail-Fast Activado
-                            </h2>
-                            <p class="text-xs text-slate-500 font-medium mt-1">El documento no se enviará hasta corregir los datos dudosos.</p>
-                        </div>
-                    </div>
-
-                    <div class="p-8 flex-1 overflow-y-auto relative z-10">
-                        <form class="space-y-6 max-w-md mx-auto">
-                            <!-- Razón Social -->
-                            <div>
-                                <label class="block text-xs font-bold text-navy mb-1.5 uppercase">Razón Social <span class="text-green-600 ml-2">(Match: 98%)</span></label>
-                                <input type="text" value="Papelería La 14" readonly class="w-full bg-slate-50 border border-slate-200 text-slate-500 text-sm font-bold rounded-lg block p-3">
-                            </div>
-
-                            <!-- NIT (Error) -->
-                            <div class="bg-white p-5 border-2 border-danger rounded-xl shadow-[0_0_15px_rgba(159,18,57,0.1)] relative">
-                                <label class="block text-xs font-bold text-danger mb-2 uppercase flex justify-between items-center">
-                                    <span>NIT / Documento Identidad</span>
-                                    <span class="text-[10px] text-white bg-danger px-1.5 py-0.5 rounded font-bold">Confianza OCR: 12%</span>
-                                </label>
-                                <input type="text" placeholder="Digite manualmente..." class="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-lg block p-3 font-mono font-bold focus:outline-none focus:border-danger focus:ring-1 focus:ring-danger">
-                                <p class="mt-3 text-xs font-medium text-danger bg-[#fff1f2] p-2 rounded border border-[#fecdd3]">
-                                    El OCR falló. Digite el valor para liberar el bloqueo.
-                                </p>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="p-6 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 z-10 relative">
-                        <button disabled class="px-6 py-3 text-sm font-bold text-slate-400 bg-slate-200 rounded-lg cursor-not-allowed flex items-center gap-2 uppercase tracking-wide">
-                            <i data-lucide="lock" class="h-4 w-4"></i> Guardar y Enviar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==========================================
-             PANTALLA 4: BÓVEDA ISO 27001 (NUEVO)
-             ========================================== -->
-        <div x-show="currentTab === 'audit'" x-cloak class="space-y-6">
-            <div class="bg-navy text-white p-8 rounded-2xl shadow-xl flex flex-col md:flex-row gap-8 items-center justify-between border-t-4 border-blue-500">
-                <div class="max-w-2xl">
-                    <h2 class="text-3xl font-bold mb-2">Bóveda Criptográfica y Auditoría</h2>
-                    <p class="text-slate-300 text-lg">Cumplimiento estricto ISO 27001 y Habeas Data. Trazabilidad inmutable de cada transacción y aislamiento de datos por firma (RLS).</p>
-                </div>
-                <i data-lucide="shield-check" class="w-24 h-24 text-blue-500 opacity-50"></i>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- RLS Config -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-navy text-lg mb-4 flex items-center gap-2">
-                        <i data-lucide="database" class="w-5 h-5 text-blue-600"></i>
-                        Aislamiento Row-Level Security
-                    </h3>
-                    <div class="bg-slate-900 p-4 rounded-lg text-sm font-mono text-blue-300 overflow-x-auto border border-slate-700 shadow-inner">
-<pre class="console-text">
-<span class="text-pink-400">CREATE POLICY</span> "Aislamiento por Firma" 
-<span class="text-pink-400">ON</span> public.clients
-<span class="text-pink-400">FOR ALL</span>
-<span class="text-pink-400">USING</span> (
-  firm_id = <span class="text-yellow-300">auth.jwt()</span>->><span class="text-green-300">'firm_id'</span>
-);
-</pre>
-                    </div>
-                    <p class="text-xs text-slate-500 mt-3 font-medium">Garantiza matemáticamente que los usuarios solo accedan a datos de su propia firma.</p>
-                </div>
-
-                <!-- Supabase Storage -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-navy text-lg mb-4 flex items-center gap-2">
-                        <i data-lucide="hard-drive" class="w-5 h-5 text-blue-600"></i>
-                        Estructura Custodia (5 Años)
-                    </h3>
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 font-mono text-sm text-slate-700">
-                        <div class="flex items-center gap-2 mb-2"><i data-lucide="folder" class="w-4 h-4 text-blue-500"></i> firmas/</div>
-                        <div class="flex items-center gap-2 mb-2 ml-6"><i data-lucide="folder" class="w-4 h-4 text-blue-500"></i> firm_UUID_102/</div>
-                        <div class="flex items-center gap-2 mb-2 ml-12"><i data-lucide="folder" class="w-4 h-4 text-blue-500"></i> client_UUID_948/</div>
-                        <div class="flex items-center gap-2 mb-2 ml-18"><i data-lucide="folder" class="w-4 h-4 text-blue-500"></i> 2026/04/</div>
-                        <div class="flex items-center gap-2 ml-24"><i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i> FAC_459.pdf <span class="text-[10px] bg-slate-200 px-1 rounded ml-2">Signed URL</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Audit Trail Table -->
-            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mt-6">
-                <div class="px-5 py-4 border-b border-slate-200 bg-slate-50">
-                    <h3 class="font-bold text-navy text-sm uppercase tracking-wide">Esquema Audit - Registro Forense Inmutable</h3>
-                </div>
-                <table class="w-full text-sm text-left whitespace-nowrap">
-                    <thead class="bg-slate-100 text-slate-500 font-bold border-b border-slate-200 text-xs uppercase">
-                        <tr>
-                            <th class="px-5 py-3">Timestamp (UTC)</th>
-                            <th class="px-5 py-3">Actor (Usuario/IA)</th>
-                            <th class="px-5 py-3">Acción</th>
-                            <th class="px-5 py-3">Entidad Afectada</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 font-mono text-xs text-slate-600">
-                        <tr class="hover:bg-slate-50">
-                            <td class="px-5 py-3">2026-04-10 14:32:01</td>
-                            <td class="px-5 py-3 font-bold text-navy">sys_ocr_worker_1</td>
-                            <td class="px-5 py-3"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded">UPDATE</span></td>
-                            <td class="px-5 py-3">public.documents (id: 4892)</td>
-                        </tr>
-                        <tr class="hover:bg-slate-50">
-                            <td class="px-5 py-3">2026-04-10 14:35:12</td>
-                            <td class="px-5 py-3 font-bold text-navy">auxiliar_carlos@firma.com</td>
-                            <td class="px-5 py-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded">MANUAL_OVERRIDE</span></td>
-                            <td class="px-5 py-3">public.documents.nit_field</td>
-                        </tr>
-                        <tr class="hover:bg-slate-50">
-                            <td class="px-5 py-3">2026-04-10 14:35:15</td>
-                            <td class="px-5 py-3 font-bold text-navy">auxiliar_carlos@firma.com</td>
-                            <td class="px-5 py-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded">INSERT</span></td>
-                            <td class="px-5 py-3">public.sync_jobs (Siigo Push)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ==========================================
-             PANTALLA 5: PORTAL CLIENTE FINAL
-             ========================================== -->
-        <div x-show="currentTab === 'portal'" x-cloak class="flex justify-center bg-slate-200 py-10 -mx-6 -mt-6 min-h-[900px]">
-            <!-- Mobile Device Simulator -->
-            <div class="w-full max-w-[390px] h-[844px] bg-white shadow-2xl overflow-hidden flex flex-col relative border-[12px] border-slate-900 rounded-[3rem] ring-4 ring-slate-800">
-                <div class="absolute top-0 inset-x-0 h-6 bg-slate-900 rounded-b-xl w-40 mx-auto z-50"></div>
-                <div class="h-12 bg-corporate text-white flex justify-between items-center px-6 text-[12px] font-bold z-40 pt-2">
-                    <span>09:41</span>
-                    <div class="flex space-x-1.5 items-center">
-                        <i data-lucide="bar-chart-2" class="h-3.5 w-3.5"></i>
-                        <i data-lucide="wifi" class="h-3.5 w-3.5"></i>
-                        <i data-lucide="battery-full" class="h-4 w-4"></i>
-                    </div>
-                </div>
-
-                <!-- Header -->
-                <div class="bg-corporate px-6 pt-6 pb-8 text-white relative overflow-hidden shrink-0">
-                    <div class="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-blue-600/20 blur-xl"></div>
-                    
-                    <div class="flex justify-between items-center mb-6 relative z-10">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
-                                <i data-lucide="shield-check" class="text-blue-400 h-4 w-4"></i>
-                            </div>
-                            <span class="text-[10px] font-bold tracking-widest uppercase">FirmaContable Pro</span>
-                        </div>
-                    </div>
-                    
-                    <div class="relative z-10">
-                        <h1 class="text-2xl font-bold leading-tight tracking-tight">Hola, Ferretería El Constructor SAS</h1>
-                        <div class="mt-3 inline-flex items-center bg-black/30 px-3 py-1.5 rounded-md border border-white/10 shadow-inner">
-                            <span class="text-xs font-mono font-bold text-blue-200">NIT: 900.123.456-7</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Body (Scrollable) -->
-                <div class="flex-1 overflow-y-auto bg-slate-50 relative pb-20">
-                    <div class="px-5 -mt-4 relative z-20 mb-6">
-                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-6 shadow-xl transform transition active:scale-95 flex flex-col items-center justify-center space-y-3 border-b-4 border-blue-800 relative overflow-hidden">
-                            <div class="bg-white/20 p-4 rounded-full">
-                                <i data-lucide="upload-cloud" class="h-8 w-8"></i>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-bold text-lg block">Subir soportes físicos (Fotos/PDF)</span>
-                            </div>
-                        </button>
-                    </div>
-
-                    <div class="px-5 space-y-6">
-                        <!-- Tareas -->
-                        <div>
-                            <div class="bg-white border border-danger/20 rounded-xl shadow-sm overflow-hidden relative">
-                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-danger"></div>
-                                <div class="p-4">
-                                    <div class="flex justify-between items-start">
-                                        <h3 class="font-bold text-navy text-sm">Falta estado de cuenta de Bancolombia</h3>
-                                        <span class="bg-[#fff1f2] text-danger border border-[#fecdd3] text-[10px] font-bold px-2 py-1 rounded-md uppercase">Vence en 2 días</span>
+                                    <p className="text-xs text-slate-500 mb-3">Rechazo de Siigo API al intentar crear tercero.</p>
+                                    <div className="flex justify-end gap-2">
+                                        <button className="px-3 py-1.5 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md transition-colors">Ignorar</button>
+                                        <button className="px-3 py-1.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-md transition-colors">Corregir NIT</button>
                                     </div>
-                                    <button class="mt-4 bg-slate-100 hover:bg-slate-200 text-navy text-xs font-bold py-2 px-4 rounded-lg w-full transition-colors flex items-center justify-center gap-2">
-                                        Adjuntar Archivo <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                    </button>
+                                </div>
+                                
+                                <div className="p-4 mx-2 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors bg-white">
+                                    <div className="flex justify-between items-start mb-1">
+                                        <h4 className="font-semibold text-slate-800 text-sm">Distribuidora Sur Ltda</h4>
+                                        <span className="badge bg-amber-100 text-amber-700">Radian Vencido</span>
+                                    </div>
+                                    <p className="text-xs text-slate-500 mb-3">Factura #5521 próxima a perder deducibilidad.</p>
+                                    <div className="flex justify-end gap-2">
+                                        <button className="px-3 py-1.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-md transition-colors">Emitir Acuse</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Screen 2: Auditoría OCR ---
+        const OCRScreen = () => {
+            const [nitConfirmed, setNitConfirmed] = useState(false);
+            const [nitValue, setNitValue] = useState("900.123.456-7");
+
+            return (
+                <div className="h-[calc(100vh-80px)] flex flex-col md:flex-row bg-slate-100">
+                    {/* Left: Viewer */}
+                    <div className="w-full md:w-[55%] bg-slate-900 p-8 flex flex-col relative overflow-hidden border-r border-slate-800">
+                        <div className="absolute top-4 left-4 z-10 flex gap-2">
+                            <span className="badge bg-slate-800 text-slate-300 border border-slate-700">Visor de Documento</span>
+                            <span className="badge bg-emerald-900/50 text-emerald-400 border border-emerald-800/50 flex items-center gap-1">
+                                <Icon name="scan" className="w-3 h-3" /> IA Activa
+                            </span>
+                        </div>
+                        
+                        {/* Mock Document */}
+                        <div className="flex-1 flex items-center justify-center relative mt-8">
+                            <div className="bg-white w-full max-w-md aspect-[1/1.4] rounded-sm shadow-2xl p-8 relative transform scale-95 md:scale-100">
+                                {/* Bounding Boxes Simulation */}
+                                <div className="absolute top-[75px] left-[30px] right-[30px] h-[40px] bg-emerald-500/10 border border-emerald-500/50 rounded pointer-events-none"></div>
+                                <div className="absolute top-[125px] left-[30px] w-[150px] h-[24px] bg-emerald-500/10 border border-emerald-500/50 rounded pointer-events-none"></div>
+                                
+                                {/* NIT Focus */}
+                                {!nitConfirmed && (
+                                    <div className="absolute top-[125px] right-[30px] w-[200px] h-[24px] bg-rose-500/10 border border-rose-500/50 rounded ring-4 ring-rose-500/20 pointer-events-none"></div>
+                                )}
+                                {nitConfirmed && (
+                                    <div className="absolute top-[125px] right-[30px] w-[200px] h-[24px] bg-emerald-500/10 border border-emerald-500/50 rounded pointer-events-none"></div>
+                                )}
+
+                                <div className="absolute bottom-[95px] right-[30px] w-[140px] h-[34px] bg-emerald-500/10 border border-emerald-500/50 rounded pointer-events-none"></div>
+
+                                {/* Doc Content */}
+                                <div className="text-center mb-8 border-b border-slate-200 pb-4">
+                                    <h1 className="text-lg font-bold font-serif text-slate-800">FERRETERÍA EL CONSTRUCTOR SAS</h1>
+                                    <p className="text-xs text-slate-500 font-mono mt-2 filter blur-[0.5px]">NIT: 900.123.456-7</p>
+                                </div>
+                                <div className="space-y-4 font-mono text-xs text-slate-700">
+                                    <div className="flex justify-between"><span>FECHA:</span> <span>12/07/2026</span></div>
+                                    <div className="flex justify-between"><span>CLIENTE:</span> <span>PÚBLICO GENERAL</span></div>
+                                    <div className="h-40 border border-slate-100 mt-4 p-2 bg-slate-50 flex flex-col gap-2 text-slate-500">
+                                        <div className="flex justify-between border-b border-slate-200 pb-1"><span>Cemento Gris 50kg</span><span>$ 1,500,000</span></div>
+                                        <div className="flex justify-between border-b border-slate-200 pb-1"><span>Varilla 1/2" Corrugada</span><span>$ 3,000,000</span></div>
+                                    </div>
+                                    <div className="flex justify-between font-bold text-base border-t border-slate-300 pt-4 text-slate-900">
+                                        <span>TOTAL PAGAR:</span> <span>$ 4,500,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="absolute bottom-6 right-6 flex gap-2">
+                            <button className="p-2.5 bg-slate-800/80 hover:bg-slate-700 text-white rounded-lg backdrop-blur-sm"><Icon name="zoom-in" className="w-5 h-5" /></button>
+                            <button className="p-2.5 bg-slate-800/80 hover:bg-slate-700 text-white rounded-lg backdrop-blur-sm"><Icon name="zoom-out" className="w-5 h-5" /></button>
+                        </div>
+                    </div>
+
+                    {/* Right: Engine */}
+                    <div className="w-full md:w-[45%] bg-white flex flex-col shadow-2xl z-10 relative">
+                        <div className="p-6 border-b border-slate-200 bg-white">
+                            <h3 className="text-xl font-bold text-slate-900">Auditoría de Extracción</h3>
+                            <p className="text-sm text-slate-500 mt-1">Soporte escaneado vía Portal Móvil.</p>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-8 space-y-6">
+                            {/* Field 1 */}
+                            <div className="group">
+                                <div className="flex justify-between items-center mb-1.5">
+                                    <label className="text-sm font-semibold text-slate-700">Razón Social</label>
+                                    <span className="badge bg-emerald-100 text-emerald-700">Conf: 98%</span>
+                                </div>
+                                <input type="text" readOnly value="Ferretería El Constructor SAS" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-slate-900 outline-none transition-shadow" />
+                            </div>
+
+                            {/* Field 2 */}
+                            <div className="group">
+                                <div className="flex justify-between items-center mb-1.5">
+                                    <label className="text-sm font-semibold text-slate-700">Fecha de Expedición</label>
+                                    <span className="badge bg-emerald-100 text-emerald-700">Conf: 95%</span>
+                                </div>
+                                <input type="date" readOnly value="2026-07-12" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-slate-900 outline-none transition-shadow" />
+                            </div>
+
+                            {/* Field 3: Needs attention */}
+                            <div className={`p-5 rounded-xl border-2 transition-all duration-300 shadow-sm ${nitConfirmed ? 'border-emerald-200 bg-emerald-50/50' : 'border-rose-400 bg-rose-50'}`}>
+                                <div className="flex justify-between items-center mb-3">
+                                    <label className={`text-sm font-bold flex items-center gap-1.5 ${nitConfirmed ? 'text-slate-700' : 'text-rose-700'}`}>
+                                        {!nitConfirmed && <Icon name="alert-circle" className="w-4 h-4" />}
+                                        NIT Proveedor
+                                    </label>
+                                    <span className={`badge ${nitConfirmed ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+                                        {nitConfirmed ? 'Verificado' : 'Conf: 62% (Revisión)'}
+                                    </span>
+                                </div>
+                                <div className="flex gap-3">
+                                    <input 
+                                        type="text" 
+                                        value={nitValue}
+                                        onChange={(e) => setNitValue(e.target.value)}
+                                        disabled={nitConfirmed}
+                                        className={`w-full p-3 border rounded-lg text-sm outline-none transition-all ${nitConfirmed ? 'bg-transparent border-emerald-200 text-slate-800' : 'bg-white border-rose-300 text-rose-900 focus:ring-2 focus:ring-rose-500 font-bold'}`} 
+                                    />
+                                    {!nitConfirmed && (
+                                        <button 
+                                            onClick={() => setNitConfirmed(true)}
+                                            className="px-5 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-bold transition-colors flex items-center gap-1.5 shadow-sm"
+                                        >
+                                            Confirmar
+                                        </button>
+                                    )}
+                                </div>
+                                {!nitConfirmed && <p className="text-xs text-rose-600 mt-3 font-medium">NIT borroso en el soporte. Confirme los dígitos.</p>}
+                            </div>
+
+                            {/* Field 4 */}
+                            <div className="group">
+                                <div className="flex justify-between items-center mb-1.5">
+                                    <label className="text-sm font-semibold text-slate-700">Valor Total Módulo</label>
+                                    <span className="badge bg-emerald-100 text-emerald-700">Conf: 99%</span>
+                                </div>
+                                <div className="relative">
+                                    <span className="absolute left-4 top-3 text-slate-500 font-medium">$</span>
+                                    <input type="text" readOnly value="4,500,000" className="w-full pl-8 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 font-medium font-mono" />
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Historial -->
-                        <div>
-                            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-                                <div class="p-4 flex items-start gap-3 border-b border-slate-100">
-                                    <div class="bg-green-100 p-2 rounded-lg text-green-600 shrink-0">
-                                        <i data-lucide="file-check-2" class="h-4 w-4"></i>
+                        <div className="p-6 border-t border-slate-200 bg-white">
+                            <button 
+                                disabled={!nitConfirmed}
+                                className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 ${nitConfirmed ? 'bg-slate-900 text-white shadow-lg hover:bg-slate-800 hover:-translate-y-0.5' : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'}`}
+                            >
+                                <Icon name="send" className="w-5 h-5" />
+                                Sincronizar con Siigo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Screen 3: Portal Cliente (Mobile First) ---
+        const ClientScreen = () => {
+            return (
+                <div className="min-h-[calc(100vh-80px)] bg-slate-100 py-12 flex items-center justify-center relative overflow-hidden">
+                    {/* Background decor */}
+                    <div className="absolute w-[800px] h-[800px] bg-slate-200 rounded-full blur-3xl -bottom-40 -right-40"></div>
+                    
+                    {/* Mobile Frame Simulation */}
+                    <div className="w-full max-w-[400px] h-[820px] bg-white border-[14px] border-slate-900 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col z-10 ring-4 ring-slate-900/10">
+                        {/* Status Bar / Notch area */}
+                        <div className="h-10 w-full flex items-center justify-between px-6 pt-2 absolute top-0 z-50 text-white font-medium text-xs">
+                            <span>09:41</span>
+                            <div className="flex gap-1.5">
+                                <Icon name="wifi" className="w-4 h-4" />
+                                <Icon name="battery-full" className="w-4 h-4" />
+                            </div>
+                        </div>
+
+                        {/* App Header (Neo-bank style) */}
+                        <div className="bg-slate-900 text-white pt-16 pb-8 px-6 rounded-b-[2rem] shadow-lg relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
+                            
+                            <div className="flex justify-between items-center mb-8 relative z-10">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 shadow-inner">
+                                        <Icon name="building-2" className="w-6 h-6 text-slate-300" />
                                     </div>
                                     <div>
-                                        <p class="text-xs font-bold text-navy">3 facturas electrónicas recibidas hoy por Radian</p>
-                                        <p class="text-[10px] font-bold text-green-600 mt-1 uppercase tracking-wide">[Procesadas]</p>
+                                        <p className="text-xs text-slate-400 font-medium">Hola de nuevo,</p>
+                                        <p className="font-bold text-base tracking-tight">Ferretería El Constructor</p>
+                                    </div>
+                                </div>
+                                <div className="w-10 h-10 bg-slate-800/50 rounded-full flex items-center justify-center border border-slate-700/50 backdrop-blur-sm relative">
+                                    <Icon name="bell" className="w-5 h-5 text-slate-200" />
+                                    <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full"></span>
+                                </div>
+                            </div>
+
+                            <div className="relative z-10 bg-slate-800/40 p-5 rounded-2xl border border-slate-700/50 backdrop-blur-md">
+                                <p className="text-xs text-slate-400 font-medium mb-1 uppercase tracking-wider">Impuestos estimados (Este Mes)</p>
+                                <div className="flex items-baseline gap-2">
+                                    <h2 className="text-4xl font-black tracking-tighter">$4,500,000</h2>
+                                    <span className="text-sm font-bold text-slate-400">COP</span>
+                                </div>
+                                <div className="mt-4 flex gap-2">
+                                    <span className="badge bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">UVT Actualizado</span>
+                                    <span className="badge bg-slate-700 text-slate-300 border border-slate-600">Proyección</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* App Body */}
+                        <div className="flex-1 overflow-y-auto px-6 py-6 pb-24 bg-slate-50">
+                            {/* Primary Action CTA */}
+                            <button className="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-6 flex items-center gap-5 shadow-sm mb-8 group transition-all active:scale-95">
+                                <div className="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform rotate-3 group-hover:rotate-6">
+                                    <Icon name="camera" className="w-6 h-6" />
+                                </div>
+                                <div className="text-left">
+                                    <p className="font-bold text-slate-900 text-lg">Escanear Factura</p>
+                                    <p className="text-xs text-slate-500 mt-1">Sube foto de soportes físicos</p>
+                                </div>
+                                <Icon name="chevron-right" className="w-5 h-5 text-slate-300 ml-auto" />
+                            </button>
+
+                            {/* Feed */}
+                            <div className="mb-5 flex justify-between items-end">
+                                <h3 className="font-bold text-slate-900 text-lg">Historial Operativo</h3>
+                            </div>
+
+                            <div className="space-y-4">
+                                {/* Feed Item 1 */}
+                                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex gap-4 items-start">
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                        <Icon name="mail-check" className="w-5 h-5 text-blue-600" />
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between items-start">
+                                            <h4 className="font-bold text-slate-800 text-sm">Factura #1020 Procesada</h4>
+                                            <span className="text-[10px] text-slate-400 font-medium">10:42 AM</span>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mt-1 leading-relaxed">Leída de correo Radian y enviada a Siigo. Acuse generado.</p>
+                                    </div>
+                                </div>
+
+                                {/* Feed Item 2 */}
+                                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex gap-4 items-start">
+                                    <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                                        <Icon name="file-text" className="w-5 h-5 text-emerald-600" />
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between items-start">
+                                            <h4 className="font-bold text-slate-800 text-sm">Soporte de Nómina</h4>
+                                            <span className="text-[10px] text-slate-400 font-medium">Ayer</span>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mt-1 leading-relaxed">Digitalizado por IA con 98% de precisión. Listo para revisión.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Tab: Landing de Ventas -->
-        <div x-show="currentTab === 'landing'" class="space-y-6 max-w-4xl mx-auto" x-cloak>
-            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-                <!-- Header Landing -->
-                <div class="bg-gradient-to-br from-navy to-corporate text-white p-12 text-center relative overflow-hidden">
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjU2M2ViIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMWQ0ZWQ4IiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-10"></div>
-                    <div class="relative z-10">
-                        <span class="inline-block bg-blue-500 text-white font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-6 shadow-lg border border-blue-400">Blindaje Tributario IA</span>
-                        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Únete a la nueva era contable.<br><span class="text-blue-400">Sin cajas, sin multas.</span></h1>
-                        <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10">La Firma Contable del futuro que conecta directamente con tus finanzas en tiempo real. Olvídate del papeleo, nosotros nos encargamos del riesgo.</p>
-                        <button class="bg-green-500 hover:bg-green-400 text-navy font-black py-4 px-8 rounded-xl shadow-xl transform transition hover:-translate-y-1 hover:scale-105 text-lg flex items-center justify-center gap-3 mx-auto">
-                            Agenda una auditoría gratuita de tu empresa <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Beneficios -->
-                <div class="p-10 bg-slate-50">
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center hover:border-blue-200 transition-colors">
-                            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 transform -rotate-3">
-                                <i data-lucide="globe" class="w-7 h-7"></i>
-                            </div>
-                            <h3 class="font-bold text-navy text-lg mb-2">100% Digital</h3>
-                            <p class="text-sm text-slate-600">Atendemos clientes en toda Colombia. Tu contabilidad no tiene fronteras.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center hover:border-blue-200 transition-colors">
-                            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 transform rotate-3">
-                                <i data-lucide="smartphone" class="w-7 h-7"></i>
-                            </div>
-                            <h3 class="font-bold text-navy text-lg mb-2">Portal Premium 24/7</h3>
-                            <p class="text-sm text-slate-600">Tus impuestos y requerimientos directamente en tu celular, siempre disponibles.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center hover:border-blue-200 transition-colors">
-                            <div class="w-14 h-14 bg-red-100 text-danger rounded-2xl flex items-center justify-center mx-auto mb-4 transform -rotate-3">
-                                <i data-lucide="shield-alert" class="w-7 h-7"></i>
-                            </div>
-                            <h3 class="font-bold text-navy text-lg mb-2">Cero Multas DIAN</h3>
-                            <p class="text-sm text-slate-600">Tolerancia cero a errores humanos mediante validación automática con Siigo.</p>
+                        {/* Bottom Navigation */}
+                        <div className="absolute bottom-0 inset-x-0 bg-white/80 backdrop-blur-xl border-t border-slate-200/50 px-6 py-5 flex justify-between items-center z-20 pb-8">
+                            <button className="flex flex-col items-center gap-1.5 text-slate-900">
+                                <Icon name="home" className="w-6 h-6" />
+                                <span className="text-[10px] font-bold">Inicio</span>
+                            </button>
+                            <button className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-slate-600 transition-colors">
+                                <Icon name="pie-chart" className="w-6 h-6" />
+                                <span className="text-[10px] font-medium">Impuestos</span>
+                            </button>
+                            <button className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-slate-600 transition-colors relative">
+                                <div className="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full"></div>
+                                <Icon name="folder" className="w-6 h-6" />
+                                <span className="text-[10px] font-medium">Bóveda</span>
+                            </button>
+                            <button className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-slate-600 transition-colors">
+                                <Icon name="user" className="w-6 h-6" />
+                                <span className="text-[10px] font-medium">Perfil</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            );
+        };
 
-    </main>
+        // --- Screen 4: Landing Page Ventas ---
+        const LandingScreen = () => {
+            return (
+                <div className="min-h-[calc(100vh-80px)] bg-slate-950 text-slate-50 overflow-hidden relative selection:bg-blue-500/30">
+                    {/* High-end Background glow effects */}
+                    <div className="glow top-[-200px] left-[-200px] opacity-50 bg-[radial-gradient(circle,rgba(59,130,246,0.15)_0%,rgba(0,0,0,0)_70%)]"></div>
+                    <div className="glow bottom-[-200px] right-[-200px] opacity-40 bg-[radial-gradient(circle,rgba(168,85,247,0.15)_0%,rgba(0,0,0,0)_70%)]"></div>
+                    
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDIiPjwvcmVjdD4KPC9zdmc+')] opacity-20 mix-blend-overlay"></div>
 
-    <script>
-        lucide.createIcons();
-        document.addEventListener('alpine:initialized', () => {
-            Alpine.effect(() => { setTimeout(() => lucide.createIcons(), 50); });
-        });
+                    <div className="max-w-7xl mx-auto px-6 py-24 relative z-10">
+                        {/* Hero Section */}
+                        <div className="text-center max-w-4xl mx-auto mb-24">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 mb-8 shadow-sm">
+                                <span className="flex h-2 w-2 relative">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                </span>
+                                <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Orquestador B2B Versión 2.0</span>
+                            </div>
+                            
+                            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+                                Contabilidad sin cajas de cartón. <br className="hidden md:block"/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+                                    Evita multas DIAN con IA.
+                                </span>
+                            </h1>
+                            <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto font-medium leading-relaxed">
+                                Plataforma de orquestación operativa para firmas contables élite. Automatiza la lectura de documentos, blinda tu cartera contra sanciones Radian y despliega portales móviles para tus clientes.
+                            </p>
+                            
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <button className="w-full sm:w-auto px-8 py-4 bg-white text-slate-950 font-bold rounded-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.15)] flex items-center justify-center gap-2">
+                                    Cotizar Orquestación <Icon name="arrow-right" className="w-4 h-4" />
+                                </button>
+                                <button className="w-full sm:w-auto px-8 py-4 bg-slate-900/50 backdrop-blur-md text-white font-medium rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
+                                    <Icon name="play" className="w-4 h-4" /> Ver Demo Técnica
+                                </button>
+                            </div>
+
+                            <div className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 text-slate-500 text-sm font-semibold">
+                                <div className="flex items-center gap-2"><Icon name="shield-check" className="w-5 h-5 text-slate-400" /> Seguridad ISO 27001</div>
+                                <div className="flex items-center gap-2"><Icon name="database" className="w-5 h-5 text-slate-400" /> Partner de Siigo API</div>
+                                <div className="flex items-center gap-2"><Icon name="building" className="w-5 h-5 text-slate-400" /> +50 Firmas Top en Colombia</div>
+                            </div>
+                        </div>
+
+                        {/* Bento Grid Features */}
+                        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                            <div className="bg-slate-900/40 border border-slate-800/60 p-8 rounded-3xl hover:bg-slate-900/80 transition-all duration-300 hover:border-slate-700 group backdrop-blur-sm">
+                                <div className="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 text-blue-400 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:scale-110 transition-transform shadow-inner">
+                                    <Icon name="scan-line" className="w-7 h-7" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-3 text-slate-100">Cero Digitación (OCR)</h3>
+                                <p className="text-slate-400 text-sm leading-relaxed">Nuestra Inteligencia Artificial extrae datos de facturas y recibos físicos en milisegundos. Reduzca el error humano a cero y acelere su nómina.</p>
+                            </div>
+
+                            <div className="bg-slate-900/40 border border-slate-800/60 p-8 rounded-3xl hover:bg-slate-900/80 transition-all duration-300 hover:border-slate-700 group backdrop-blur-sm relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-3xl"></div>
+                                <div className="w-14 h-14 bg-gradient-to-br from-rose-500/20 to-orange-500/20 text-rose-400 rounded-2xl flex items-center justify-center mb-6 border border-rose-500/20 group-hover:scale-110 transition-transform shadow-inner relative z-10">
+                                    <Icon name="radar" className="w-7 h-7" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-3 text-slate-100 relative z-10">Radar de Multas DIAN</h3>
+                                <p className="text-slate-400 text-sm leading-relaxed relative z-10">Monitoreo activo de Radian y vencimientos. Si falta un acuse o hay error (Fail-Fast), el sistema lo aísla alertándole de inmediato.</p>
+                            </div>
+
+                            <div className="bg-slate-900/40 border border-slate-800/60 p-8 rounded-3xl hover:bg-slate-900/80 transition-all duration-300 hover:border-slate-700 group backdrop-blur-sm">
+                                <div className="w-14 h-14 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20 group-hover:scale-110 transition-transform shadow-inner">
+                                    <Icon name="smartphone" className="w-7 h-7" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-3 text-slate-100">Portal Móvil para Clientes</h3>
+                                <p className="text-slate-400 text-sm leading-relaxed">Entregue a sus clientes una web app con marca blanca. Podrán subir documentos y revisar sus impuestos desde el celular en tiempo real.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Main App Component Setup ---
+        const App = () => {
+            const [activeTab, setActiveTab] = useState(0);
+
+            const tabs = [
+                { id: 0, label: "Dashboard Socios", icon: "layout-dashboard" },
+                { id: 1, label: "Auditoría OCR", icon: "scan-face" },
+                { id: 2, label: "Portal Cliente", icon: "smartphone" },
+                { id: 3, label: "Landing Ventas", icon: "rocket" },
+            ];
+
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [activeTab]);
+
+            return (
+                <div className="min-h-screen flex flex-col font-sans">
+                    <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                            <div className="flex justify-between items-center h-20">
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-slate-900 p-2.5 rounded-xl shadow-inner">
+                                        <Icon name="boxes" className="w-6 h-6 text-white" />
+                                    </div>
+                                    <span className="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:block">Orquestador<span className="text-blue-600">.io</span></span>
+                                </div>
+                                
+                                <nav className="flex space-x-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200 backdrop-blur-md">
+                                    {tabs.map((tab) => (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => setActiveTab(tab.id)}
+                                            className={`flex items-center gap-2 px-3 sm:px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ease-in-out ${
+                                                activeTab === tab.id 
+                                                ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50' 
+                                                : 'text-slate-500 hover:text-slate-800 hover:bg-slate-200/50'
+                                            }`}
+                                        >
+                                            <Icon name={tab.icon} className={`w-4 h-4 ${activeTab === tab.id ? 'text-blue-600' : ''}`} />
+                                            <span className="hidden md:block">{tab.label}</span>
+                                        </button>
+                                    ))}
+                                </nav>
+                                
+                                <div className="flex items-center gap-3">
+                                    <div className="hidden sm:block text-right">
+                                        <div className="text-sm font-bold text-slate-900">Jaison Rodriguez</div>
+                                        <div className="text-xs text-slate-500">Socio Director</div>
+                                    </div>
+                                    <div className="w-10 h-10 rounded-full bg-slate-200 border-2 border-white shadow-sm flex items-center justify-center overflow-hidden">
+                                        <img src="https://ui-avatars.com/api/?name=Jaison+Rodriguez&background=0f172a&color=fff" alt="User" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="flex-1 w-full bg-slate-50 transition-opacity duration-300">
+                        {activeTab === 0 && <DashboardScreen />}
+                        {activeTab === 1 && <OCRScreen />}
+                        {activeTab === 2 && <ClientScreen />}
+                        {activeTab === 3 && <LandingScreen />}
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
-
